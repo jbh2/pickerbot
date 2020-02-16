@@ -1,0 +1,3 @@
+prox = sim.getObjectHandle('Proximity_sensor0')
+pdata = sim.handleProximitySensor(prox)
+sim.persistentDataWrite('proxdata', pdata)
