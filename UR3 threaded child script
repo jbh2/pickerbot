@@ -1,0 +1,33 @@
+-- This is a threaded script, and is just an example!
+
+function sysCall_threadmain()
+    jointHandles={-1,-1,-1,-1,-1,-1}
+    for i=1,6,1 do
+        jointHandles[i]=sim.getObjectHandle('UR3_joint'..i)
+    end
+
+    -- Set-up some of the RML vectors:
+    vel=180
+    accel=40
+    jerk=80
+    theta = 0
+    currentVel={0,0,0,0,0,0,0}
+    currentAccel={0,0,0,0,0,0,0}
+    maxVel={vel*math.pi/180,vel*math.pi/180,vel*math.pi/180,vel*math.pi/180,vel*math.pi/180,vel*math.pi/180}
+    maxAccel={accel*math.pi/180,accel*math.pi/180,accel*math.pi/180,accel*math.pi/180,accel*math.pi/180,accel*math.pi/180}
+    maxJerk={jerk*math.pi/180,jerk*math.pi/180,jerk*math.pi/180,jerk*math.pi/180,jerk*math.pi/180,jerk*math.pi/180}
+    targetVel={0,0,0,0,0,0}
+    --sim.rmlVel(1, 0.0001, -1, currentVel, maxJerk, 'NULL', (5,0,0,0,0,0))
+    --joint1 = sim.getObjectHandle('UR3_joint1')
+    x = sim.persistentDataRead('proxdata', pdata)
+    --.getJointPosition(joint1)
+    while(x == '0') do
+        theta = theta + .05
+        targetPos1={theta,0,0,0,0,0}
+        sim.rmlMoveToJointPositions(jointHandles,-1,currentVel,currentAccel,maxVel,maxAccel,maxJerk,targetPos1,targetVel)
+        x = sim.persistentDataRead('proxdata', pdata)
+        print(x)
+    end
+    
+        
+end
