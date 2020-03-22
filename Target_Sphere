@@ -1,0 +1,8 @@
+function sysCall_threadmain()
+    
+    sphere = sim.getObjectHandle('Target_Sphere')
+    blob_x = tonumber(sim.persistentDataRead('blob_x'))
+    blob_y = tonumber(sim.persistentDataRead('blob_y'))
+    blob_z = tonumber(sim.persistentDataRead('blob_z'))
+    sim.setObjectPosition(sphere,-1,{blob_x,blob_y,blob_z})
+end
