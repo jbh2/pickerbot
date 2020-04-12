@@ -30,12 +30,21 @@ Test_UR3_IK.ttt (CoppeliaSim Scene)
 ### Summary:
 For this second update, a 3D blob detector is used to locate the detectable object (green). The coordinates of the object are sent to the target of the inverse kinematics (IK) tip-target pair. The target is moved to the detected object and by inverse kinematics, the robotic arm is moved so the tip is also positioned at the detected object.
 
-
 To setup the kinematic chain, set each joint of the UR3 to 'inverse kinematics mode'. Group the visible and triangulated model of each link. The UR3 does not contain any script. Create a dummy, 'tip', and attach to the end effector of the UR3. Add a second dummy, 'target', and link to the tip dummy as an IK tip-dummy pair. Using the Kinematics Module, make an IK group using the tip dummy and set the base as the UR3 base. Constraints should be set to x, y ,z and alpha-beta. This sets up the IK solution to match the x, y, z position and the z-axis of the tip dummy to the target dummy. Set the calculation method to the damped resolution method (DLS). The model becomes unstable when the target moves out of range of the tip if the calculation method is set to pseudo inverse although this method is faster. All other default settings can be kept.
 
 Add a 3d blob detector to view the space in front of the UR3. Create a static sphere to represent the 'apple' and setup the 3d blob detector to only detect this 'apple'. Since dummy models can not be dynamically moved, a second sphere, 'target_sphere', is created to be the parent of the target dummy. Using sim.persistentDataWrite within the 3d blob detector script, the location of the detected apple is sent to target_sphere and read using sim.persistentDataRead. sim.setObjectPosition is then used to move the target_sphere and attached dummy target to the apple. By IK, the UR3 is positioned so the tip matches the location of the dummy target which is now located at the apple.
 
 [Project Update 2 Demonstration](https://youtu.be/ZUpGvyd_rsQ ":D")
+
+## Project Update 3:
+### Files:
+Test_UR3_IK_V5.ttt (CoppeliaSim Scene)
+
+### Summary:
+This scene uses two UR3 robots to locate and move the detected apples. The first, is built from the previous scene and uses inverse kinematics (IK) to determine the joint angles necessary to move to the apple. This robot is hidden and sends the joint angles to the second UR3. The second UR3 is visible and controlled by forward kinematics (FK). After receiving the joint angles, the UR3 moves to the apple location. A suction gripper and proximity sensor is attached to the end of the UR3. The suction gripper is activated once the proximity sensor indicates an apple is within range. Once the apple is picked up, the UR3 is programed to drop the apple off at a predetermined crate location. As soon as the apple is dropped off, the IK control is reestablished and the UR3 moves to pick up the next apple the blob detector finds.
+
+[Project Update 3 Demonstration](https://youtu.be/q1vpi9aAqag "apples rolling everywhere :P" )
+
 
 ## Built With
 V-REP v3.6.0
